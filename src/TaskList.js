@@ -5,7 +5,10 @@ class TaskList extends Component {
     state = {  }
     render() { 
         let tasksList = this.props.tasks.map(task => {
-            return <li><Task task={task} /></li>
+            return <li key={task.id}>
+                <Task task={task} /> 
+                <button onClick={() => {this.props.deleteTask(task.id)}}>X</button>
+                </li>
         })
 
         return ( 
