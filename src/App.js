@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 
 import TodoList from "./TodoList";
@@ -9,12 +9,17 @@ Créer un composant TodoList.
 Celui-ci a des tâches, et des sous-tâches. Kiss kiss bang bang
 */
 
-function App() {
-  return (
-    <div className="App">
-      <TodoList/>
-    </div>
-  );
-}
+class App extends Component {
+  state = { 
+   }
 
+  render() { 
+    return ( 
+      <div className="App">
+        <TodoList/>
+      </div>
+     );
+  }
+}
+ 
 export default App;

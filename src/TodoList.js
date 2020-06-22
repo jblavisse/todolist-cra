@@ -1,40 +1,36 @@
 import React, { Component } from 'react';
-import Task from "./Task";
+
+import TaskForm from "./TaskForm";
+import TaskList from "./TaskList";
 
 class TodoList extends Component {
-    state = { 
+    state = {
         tasks: [
             {
                title: "Faire ma demande à Régine",
-               subtasks: [
-                   {
-                       title: "Me mettre à genoux"
-                   },
-                   {
-                       title: "Ouvrir la boite d'alliance"
-                   },
-                   {
-                       title: "Lui demander si elle veut m'épouser"
-                   }
-               ]
             },
             {
                 title: "Prier pour qu'elle dise oui",
-                subtasks: []
             }
         ]
      }
+
+     addTask = (task) =>  {
+         console.log(task);
+         let newTask = {
+             title: task
+         }
+         this.setState({
+             tasks: [...this.state.tasks, newTask]
+         })
+     }
+
     render() { 
-        let tasksList = this.state.tasks.map(task => {
-            return <li><Task task={task} /></li>
-        })
 
         return ( 
         <div className="todolist">
-            <ul>{tasksList}</ul>
-            <div class="alert alert-primary" role="alert">
-                A simple primary alert—check it out!
-            </div>
+            <TaskForm addTask={this.addTask} />
+            <TaskList tasks={this.state.tasks} />
         </div> 
         );
     }
