@@ -4,37 +4,44 @@ import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 
 class TodoList extends Component {
     state = {
-        tasks: [
-            {
-               id: uuidv4(),
-               title: "Faire ma demande à Régine",
-            },
-            {
-                id:  uuidv4(),
-                title: "Prier pour qu'elle dise oui",
-            }
-        ]
+        tasks: []
+     }
+
+     componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/todos')
+        .then(res => {
+            console.log(res.data);
+            this.setState({
+                tasks: res.data
+            })
+        })
      }
 
      addTask = (task) =>  {
-         let newTask = {
-             id: uuidv4(),
-             title: task
-         }
-         this.setState({
-             tasks: [...this.state.tasks, newTask]
-         })
+        axios.post('https://jsonplaceholder.typicode.com/todos', {
+            title: task,
+            completed: false,
+            userId: 1
+        })
+        .then(res => {
+            this.setState({
+                tasks: [...this.state.tasks, res.data]
+            })
+        })
      }
 
      deleteTask = (id) => {
-        console.log(id);
-        let tasks = this.state.tasks.filter(task => task.id !== id);
-        this.setState({
-           tasks: tasks
+        axios.delete('https://jsonplaceholder.typicode.com/todos/' + id)
+        .then(res => {
+            let tasks = this.state.tasks.filter(task => task.id !== id);
+            this.setState({
+               tasks: tasks
+            })
         })
      }
 
